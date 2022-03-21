@@ -1,14 +1,16 @@
 package com.ronansProjects.fantasyHurling.model;
 
-import org.springframework.data.annotation.Id;
+
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Document("user")
 public class User {
 
-    @Id
-    private int id;
+    private static AtomicInteger ID_GENERATOR = new AtomicInteger(100);
 
+    private int id;
     private String name;
     private String dob;
     private String address;
@@ -24,6 +26,7 @@ public class User {
     }
 
     public User(String name, String dob, String address, String countySupports) {
+        this.id = ID_GENERATOR.getAndIncrement();
         this.name = name;
         this.dob = dob;
         this.address = address;

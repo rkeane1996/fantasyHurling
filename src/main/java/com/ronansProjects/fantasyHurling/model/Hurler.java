@@ -4,29 +4,26 @@ package com.ronansProjects.fantasyHurling.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Document("hurler")
 public class Hurler {
 
-    @Id
-    private int id;
+    private static AtomicInteger ID_GENERATOR = new AtomicInteger(1000);
 
+    private int id;
     private String name;
     private String county;
     private Position position;
-    private int[] gameweekPoints;
+    private int[] gameweekPoints = new int[]{0,0,0,0,0,0,0,0,0,0,0};
     private int totalpoints;
 
     public int[] getGameweekPoints() {
         return gameweekPoints;
     }
 
-    public void setGameweekPoints(int[] gameweekPoints) {
-        this.gameweekPoints = gameweekPoints;
-    }
-
-
-
     public Hurler(String name, String county, Position position) {
+        this.id = ID_GENERATOR.getAndIncrement();
         this.name = name;
         this.county = county;
         this.position = position;
@@ -56,23 +53,17 @@ public class Hurler {
         return position;
     }
 
-    private void calculateTotalPoints(){
-        for (int points:
-             this.gameweekPoints) {
-            this.totalpoints+=points;
-        }
-    }
-
-    public void setTotalpoints() {
-        this.calculateTotalPoints();
-    }
-
     public int getTotalpoints(){return this.totalpoints;}
+
+    public void updatePoints(int points, int gameweek){
+        this.gameweekPoints[gameweek] = points;
+        this.totalpoints+=points;
+    }
 
     @Override
     public String toString() {
         return "Hurler{" +
-                "id=" + id +
+                "id=" + /*id*/
                 ", name='" + name + '\'' +
                 ", county='" + county + '\'' +
                 ", position=" + position +

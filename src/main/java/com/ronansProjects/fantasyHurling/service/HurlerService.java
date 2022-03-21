@@ -14,6 +14,10 @@ public class HurlerService {
     @Autowired
     private HurlerRepository hurlerRepository;
 
+    public Hurler updateHurler(Hurler hurler) {
+        return hurlerRepository.save(hurler);
+    }
+
     public Hurler getHurler(int id){ return hurlerRepository.findById(id); }
 
     public List<Hurler> getAllHurlers() { return hurlerRepository.findAll(); }

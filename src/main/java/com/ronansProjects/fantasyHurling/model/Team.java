@@ -1,14 +1,14 @@
 package com.ronansProjects.fantasyHurling.model;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Document("team")
 public class Team {
 
-    @Id
+    private static AtomicInteger ID_GENERATOR = new AtomicInteger(1);
     private int id;
-
     private int userId;
     private String teamName;
     private Hurler[] teamPlayers;
@@ -36,6 +36,7 @@ public class Team {
     }
 
     public Team(int userId, String teamName, Hurler[] teamPlayers) {
+        this.id = ID_GENERATOR.getAndIncrement();
         this.userId = userId;
         this.teamName = teamName;
         this.teamPlayers = teamPlayers;

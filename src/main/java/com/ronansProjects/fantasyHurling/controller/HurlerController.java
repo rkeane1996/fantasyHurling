@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
-@RequestMapping(name = "/hurler")
+@RequestMapping("/hurler")
 public class HurlerController {
 
     @Autowired
@@ -40,5 +43,11 @@ public class HurlerController {
     public List<Hurler> getHurlersPerCounty(@RequestParam String county) {
         return hurlerService.getHurlersPerCounty(county);
     }
+    
+    @PostMapping(value = "/createHurler")
+    public Hurler createHurler(@RequestBody Hurler hurler) {
+        return hurlerService.updateHurler(hurler);
+    }
+    
     
 }
